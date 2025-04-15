@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Breathing Exercise</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .breathe-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 80vh;
+    }
+
+    .circle {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      background-color: #d1a684;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      font-weight: bold;
+      transition: transform 5s ease-in-out;
+    }
+
+    .grow {
+      transform: scale(1.5);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Shine Daily</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="todo.html">To-Do</a>
+      <a href="breathe.html">Breathe</a>
+      <a href="stretch.html">Stretch</a>
+      <a href="#">About</a>
+    </nav>
+  </header>
+
+  <div class="breathe-container section">
+    <h2 class="section-title">Breathe with Calm</h2>
+    <p class="section-description">Relax and follow the rhythm: Inhale, Hold, and Exhale. Just a few cycles can refresh your mind.</p>
+
+    <div id="circle" class="circle">Inhale</div>
+    <br />
+    <button onclick="resetBreathe()">Reset</button>
+  </div>
+
+  <script>
+    const circle = document.getElementById("circle");
+    let step = 0;
+    const phases = ["Inhale", "Hold", "Exhale"];
+
+    function breatheCycle() {
+      circle.classList.add("grow");
+      circle.textContent = phases[step];
+
+      setTimeout(() => {
+        circle.classList.remove("grow");
+        step = (step + 1) % phases.length;
+        setTimeout(breatheCycle, 1000); // pause before next cycle
+      }, 5000);
+    }
+
+    function resetBreathe() {
+      step = 0;
+      circle.textContent = phases[step];
+    }
+
+    breatheCycle();
+  </script>
+</body>
+</html>

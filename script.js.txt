@@ -1,0 +1,69 @@
+const affirmations = [
+  "I am confident and capable.",
+  "Today is a fresh start, and I am ready for it.",
+  "I choose to be happy and positive.",
+  "I am deserving of success and happiness.",
+  "I believe in my abilities.",
+  "I am in charge of how I feel and today I choose happiness.",
+  "I am proud of what I’ve accomplished and excited for what’s to come.",
+  "I trust that everything will work out in the end."
+];
+
+function newAffirmation() {
+  const randomIndex = Math.floor(Math.random() * affirmations.length);
+  document.getElementById('affirmation').textContent = affirmations[randomIndex];
+}
+
+window.onload = function() {
+  newAffirmation();
+
+  // Add task when Enter is pressed
+  document.getElementById('todo-input').addEventListener('keypress', function (e) {
+    if (e.key === 'Enter') {
+      addToDo();
+    }
+  });
+};
+
+let breathInterval;
+let breathIndex = 0;
+let breathRound = 0;
+const breathSteps = ["Breathe in...", "Hold...", "Breathe out..."];
+const totalBreathRounds = 3;
+
+function startBreathingExercise() {
+  const guideText = document.getElementById('breathing-guide');
+  breathIndex = 0;
+  breathRound = 0;
+  guideText.textContent = breathSteps[breathIndex];
+
+  breathInterval = setInterval(() => {
+    breathIndex = (breathIndex + 1) % breathSteps.length;
+
+    if (breathIndex === 0) breathRound++;
+
+    if (breathRound >= totalBreathRounds) {
+      clearInterval(breathInterval);
+      guideText.textContent = "Great job! You've completed your breathing exercise.";
+    } else {
+      guideText.textContent = breathSteps[breathIndex];
+    }
+  }, 5000);
+}
+
+function resetBreathingExercise() {
+  clearInterval(breathInterval);
+  document.getElementById('breathing-guide').textContent = "Click start to begin";
+}
+
+function addToDo() {
+  const input = document.getElementById('todo-input');
+  const task = input.value.trim();
+  if (task !== "") {
+    const todoList = document.getElementById('todo-list');
+    const newTask = document.createElement('li');
+    newTask.textContent = task;
+    todoList.appendChild(newTask);
+    input.value = "";
+  }
+}
